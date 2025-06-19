@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { probarConexion } = require('./config/dataBase');
 
 const app = express();
 const puerto = 3000;
@@ -40,6 +41,16 @@ app.get('/',(req,res)=>{
         `);
 });
 
-app.listen(puerto,() => {
-    console.log(`Servidor ejecutándose en http://localhost:${puerto}`);
-});
+
+const iniciarServidor = async ()=> {
+  try {
+    await probarConexion();
+    app.listen(puerto, ()=>{
+        console.log(`Servidor ejecutando en http://localhost${puerto}`);
+    });
+  } catch (error) {
+    console.error('error al iniciar', error.message)
+  }
+};
+
+iniciarServidor();
