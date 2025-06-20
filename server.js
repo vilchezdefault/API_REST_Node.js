@@ -1,5 +1,6 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const {getUsers,getUserById} = require('./controllers/UserController')
 const { probarConexion } = require('./config/dataBase');
 
 const app = express();
@@ -8,8 +9,8 @@ const puerto = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.send(`
+app.get("/", (req, res) => {
+  res.send(`
         <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -41,15 +42,19 @@ app.get('/',(req,res)=>{
         `);
 });
 
+app.get('/api/users', getUsers);
+app.get('/api/users/:id', getUserById);
 
-const iniciarServidor = async ()=> {
+
+/// Función para iniciar el servidor 
+const iniciarServidor = async () => {
   try {
     await probarConexion();
-    app.listen(puerto, ()=>{
-        console.log(`Servidor ejecutando en http://localhost${puerto}`);
+    app.listen(puerto, () => {
+      console.log(`Servidor ejecutando en http://localhost:${puerto}`);
     });
   } catch (error) {
-    console.error('error al iniciar', error.message)
+    console.error("error al iniciar", error.message);
   }
 };
 
