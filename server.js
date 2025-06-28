@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const {getUsers,getUserById} = require('./controllers/UserController')
+const {getUsers,getUserById,createUser,updateUser,deleteUser} = require('./controllers/UserController')
 const { probarConexion } = require('./config/dataBase');
 
 const app = express();
@@ -44,6 +44,9 @@ app.get("/", (req, res) => {
 
 app.get('/api/users', getUsers);
 app.get('/api/users/:id', getUserById);
+app.post('/api/users',createUser);
+app.put('/api/users/:id',updateUser);
+app.delete('/api/users/:id',deleteUser);
 
 
 /// Función para iniciar el servidor 
